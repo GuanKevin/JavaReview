@@ -9,7 +9,7 @@ public class ArrayOfNumbers {
 	private static int[] arrayOfInt;
 
 	public ArrayOfNumbers() {
-		this (6, 100);
+		this (7, 10);
 		randomNumber = new Random();
 	}
 

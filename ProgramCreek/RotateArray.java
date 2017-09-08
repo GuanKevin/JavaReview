@@ -2,67 +2,34 @@ package ProgramCreek;
 
 import Utilities.ArrayOfNumbers;
 
-import java.util.Scanner;
-
 /**
  * Rotate an array of n elements to the right by k steps
+ * Given: 3 8 1 2 9 4 0 (Size of 7)
+ * Rotate: 3
+ * Steps: _ _ _ 3 8 1 2
+ * Remain: 9 4 0
+ * Result: 9 4 0 3 8 1 2
  */
-
 public class RotateArray {
 	public static void main(String[] args) {
-		int[] array;
-		// array = ArrayOfNumbers.getArrayOfRandomNumbers();
-		array = ArrayOfNumbers.getArrayOfSortedNumbers();
+		int[] array = ArrayOfNumbers.getArrayOfRandomNumbers();
+		final int ROTATE = 3;
 
-		System.out.println("List of numbers so far: ");
-		for (int i = 0; i < array.length; i++)
-			System.out.print(array[i] + " ");
+		if (array.length <= 1 || ROTATE == 0)
+			System.exit(0);
 
-		System.out.print("\nHow much would you like to shift? \nMax " + (array.length - 1) + ": ");
+		System.out.print("Initial array of n elements: ");
+		for (int num: array)
+			System.out.print(num + " ");
+		System.out.print("\nRotate by: " + ROTATE + "\n");
 
-		Scanner input = new Scanner(System.in);
-		int shift = input.nextInt();
-
-		if (shift > array.length - 1) {
-			shift %= array.length;
-
-			if (shift == 0) {
-				System.out.print("There is no need to shift the array, terminating program...");
-				System.exit(0);
-			} else
-				System.out.println("Input too high, changing to " + shift);
-		}
-
-		// Reversal
-		int[] array2 = reverseArray(array, 0, array.length - shift - 1);
-		array2 = reverseArray(array2, array.length - shift, array2.length - 1);
-		array2 = reverseArray(array2, 0, array2.length - 1);
-
-		// Bubble sort shift
-		/*int[] array2 = bubbleSortShift(array, shift);*/
-
-		// ArrayCopy Shift
-		/* int[] array2 = performShift(array, shift); */
-
-		displayResults(array2);
-
-		input.close();
+		/*array = performRotation(array, ROTATE); */
+		array = bubbleSortRotate(array, ROTATE);
+		displayArray(array);
 	}
 
-	public static int[] reverseArray(int[] array, int start, int end) {
-		while (start < end) {
-			int temp = array[start];
-			array[start] = array[end];
-			array[end] = temp;
-			start++;
-			end--;
-		}
-
-		return array;
-	}
-
-	public static int[] bubbleSortShift(int[] array, int shift) {
-		for (int i = 0; i < shift; i++) {
+	public static int[] bubbleSortRotate(int[] array, final int ROTATE) {
+		for (int i = 0; i < ROTATE; i++) {
 			for (int j = array.length - 1; j > 0; j--) {
 				int temp = array[j - 1];
 				array[j - 1] = array[j];
@@ -73,21 +40,27 @@ public class RotateArray {
 		return array;
 	}
 
-	public static int[] performShift(int[] array, int shift) {
+	/**
+	 *
+	 * @param array
+	 * @param ROTATE
+	 */
+	public static int[] performRotation(int[] array, final int ROTATE) {
 		int[] array2 = new int[array.length];
 
-		for (int i = 0; i < array.length - shift; i++)
-			array2[shift + i] = array[i];
+		for (int i = 0; i < array.length - ROTATE; i++)
+			array2[ROTATE + i] = array[i];
 
-		System.arraycopy(array, array.length - shift, array2, 0, shift);
+		displayArray(array2);
+		System.arraycopy(array, array.length - ROTATE, array2, 0, ROTATE);
 
 		return array2;
 	}
 
-	public static void displayResults(int[] array2) {
-		System.out.println("Displaying results:");
-
-		for (int i = 0; i < array2.length; i++)
-			System.out.print(array2[i] + " ");
+	public static void displayArray(int[] array) {
+		System.out.print("After shift: ");
+		for (int num: array)
+			System.out.print(num + " ");
+		System.out.println();
 	}
 }
