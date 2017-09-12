@@ -5,6 +5,11 @@ import Utilities.StackNotation;
 import java.util.Arrays;
 import java.util.Stack;
 
+/**
+ * Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+ * Valid operators are +, -, *, /. Each operand may be an integer or another expression.
+ */
+
 public class EvaluateReversePolishNotation {
 	public static void main(String[] args) {
 		String[] array = StackNotation.generateNotation();
